@@ -1,0 +1,32 @@
+[
+  {
+    "id": null,
+    "title": "celular",
+    "price": 800,
+    "thumbnail": "urlImagenCelular"
+  },
+  {
+    "id": 1,
+    "title": "televidor",
+    "price": 1000,
+    "thumbnail": "urlImagenTelevisor"
+  },
+  {
+    "id": 2,
+    "title": "reloj",
+    "price": 1199,
+    "thumbnail": "urlImagenReloj"
+  },
+  {
+    "id": 3,
+    "title": "mesa",
+    "price": 1199,
+    "thumbnail": "urlImagenMesa"
+  },
+  {
+    "id": 4,
+    "title": "asdf",
+    "price": "asdf",
+    "thumbnail": "asdf"
+  }
+]
