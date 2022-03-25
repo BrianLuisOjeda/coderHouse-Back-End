@@ -1,27 +1,39 @@
 const express = require("express");
+const fs = require("fs");
+const { engine } = require("express-handlebars");
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
 const { Server } = require("socket.io");
+const Contenedor = require("./controllers/contenedor");
 
 const io = new Server(server);
 
-const messages = [
-  {
-    author: "brian",
-    text: "hola"
-  },
-  {
-    author: "pablo",
-    text: "como estan"
-  },
-  {
-    author: "martin",
-    text: "hola grupo"
-  }
-];
+// configuracion servidor Express y Handlebars
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("./src/public"));
+app.set("views", "./src/views");
+app.set("view engine", "hbs");
 
-io.on("connection", (socket) => {
+app.engine(
+  "hbs",
+  engine({
+    extname: ".hbs",
+    defaultLayout: "index.hbs",
+    layoutsDir: __dirname + "/views/layouts",
+    partialsDir: __dirname + "/views/partials",
+  })
+);
+
+//  Rutas
+app.get("/", (req, res) => {
+  res.render("main", {});
+});
+
+const contenedor = new Contenedor("./src/productos.json");
+
+io.on("connection", async (socket) => {
   //Mensaje de bienvenida cuando se conecta un nuevo cliente
   console.log("nuevo usuario conectado");
   socket.emit("mensajeConexion", "bienvenido al websocket");
@@ -32,19 +44,23 @@ io.on("connection", (socket) => {
   socket.on("mensajeRespuesta", (data) => {
     console.log(data);
   });
-  //Recibimos los mensajes desde el frontend
-  socket.on("messageFront", (data) => {
-    messages.push(data);
-    io.sockets.emit("messageBack", messages);
+  //Enviar productos hacia el Front
+  socket.emit("sendProducts", await contenedor.getAll());
+  //Nuevos productos desde el Front
+  socket.on("addProducts", async (data) => {
+    const { title, price, thumbnail } = data;
+    new Contenedor("./src/productos.json").save({title, price, thumbnail});
+    io.sockets.emit("sendProducts", await contenedor.getAll());
   });
-});
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./src/public"));
-
-app.get("/", (req, res) => {
-  res.sendFile("index.html");
+  //Chat
+  const messages = JSON.parse(fs.readFileSync("./src/mensajes.json", "utf-8"));
+  socket.emit("sendMessages", messages);
+  socket.on("sendNewChat", (data) => {
+    messages.push(data);
+    fs.writeFileSync("./src/mensajes.json", JSON.stringify(messages), "utf-8");
+    io.sockets.emit("sendMessages", messages);
+  });
 });
 
 const PORT = 8080;

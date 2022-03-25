@@ -1,0 +1,66 @@
+<div class="containerForm">
+        
+      <form class="formulario" action="/productos" method="POST" onSubmit="addProd();return false">
+          <h4>Agregue un producto</h4>
+          <div class="input-group input-group-sm mb-3">
+
+            <input
+              id="title"
+              type="text"
+              name="title"
+              required
+              class="form-control"
+              placeholder="Título del producto"
+              aria-label="Título"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div class="input-group input-group-sm mb-3">
+
+            <input
+              id="price"
+              type="text"
+              name="price"
+              required
+              class="form-control"
+              placeholder="Precio unitario"
+              aria-label="Precio"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div class="input-group input-group-sm mb-3">
+
+            <input
+              id="thumbnail"
+              type="text"
+              name="thumbnail"
+              required
+              class="form-control"
+              placeholder="Thumbnail (URL)"
+              aria-label="Thumbnail"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+          <div class="d-flex justify-content-center bd-highlight mb-3">
+              <button class="btn btn-primary" id="send" type="submit button">enviar</button>
+          </div>
+        
+      </form>
+    </div>
+
+    <div class="contenedor">
+        <div class="containerLista">
+      <h4>Lista de productos</h4>
+      <table class="table table-sm table-hover table-borderless">
+        <thead>
+          <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Precio</th>
+         <th scope="col">Imagen</th>
+          </tr>
+        </thead>
+        <tbody id="products">
+        </tbody>
+      </table>
+    </div>
+    </div>

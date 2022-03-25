@@ -1,0 +1,45 @@
+h4{
+    color: red;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.containerForm{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    background: #203239;
+}
+.formulario{
+    background: #141E27;
+    padding: 4rem 7rem 4rem 7rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor{
+    padding: 3rem;
+    background: #203239;
+}
+.containerLista{
+    background: #141E27;
+    padding: 1rem;
+}
+.table{
+    color: white;
+}
+.containerMessages{
+    height: 300px;
+    background: #203239;
+    padding: 3rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contenedorMessages{
+    background: #141E27;
+    width: 500px;
+}
